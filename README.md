@@ -1,0 +1,2 @@
+# Hello Bake Procedural Material
+
