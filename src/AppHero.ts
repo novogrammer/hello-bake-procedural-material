@@ -8,7 +8,7 @@ interface ThreeObjects{
   camera:THREE.PerspectiveCamera;
   renderer:THREE.WebGLRenderer;
   orbitControls:OrbitControls;
-  cube:THREE.Mesh;
+  // cube:THREE.Mesh;
   suzanne?:THREE.Mesh;
 }
 
@@ -88,16 +88,16 @@ export default class AppHero{
     }
 
     
-    let cube:THREE.Mesh;
-    {
-      const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-      const material = new THREE.MeshStandardMaterial( { color: 0x00ff00 } );
-      cube = new THREE.Mesh( geometry, material );
-      cube.castShadow=true;
-      cube.receiveShadow=true;
-      cube.position.set(2,1,0);
-      scene.add( cube );
-    }
+    // let cube:THREE.Mesh;
+    // {
+    //   const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+    //   const material = new THREE.MeshStandardMaterial( { color: 0x00ff00 } );
+    //   cube = new THREE.Mesh( geometry, material );
+    //   cube.castShadow=true;
+    //   cube.receiveShadow=true;
+    //   cube.position.set(2,1,0);
+    //   scene.add( cube );
+    // }
     
 
 
@@ -106,7 +106,7 @@ export default class AppHero{
       camera,
       renderer,
       orbitControls,
-      cube,
+      // cube,
       suzanne:undefined,
     }
     window.addEventListener("resize",()=>{
@@ -121,10 +121,10 @@ export default class AppHero{
       scene,
       camera,
       renderer,
-      cube,
+      // cube,
     }=this.threeObjects;
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
+    // cube.rotation.x += 0.01;
+    // cube.rotation.y += 0.01;
   
     renderer.render( scene, camera );
 
