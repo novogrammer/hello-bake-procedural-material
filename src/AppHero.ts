@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { getElementSize } from "./dom_utils";
 
 interface ThreeObjects{
@@ -8,6 +9,7 @@ interface ThreeObjects{
   renderer:THREE.WebGLRenderer;
   orbitControls:OrbitControls;
   cube:THREE.Mesh;
+  suzanne?:THREE.Mesh;
 }
 
 
@@ -51,6 +53,7 @@ export default class AppHero{
     {
       const directionalLight=new THREE.DirectionalLight(0xffffff,2.0);
       directionalLight.position.set(0,5,10);
+      directionalLight.shadow.normalBias=0.05;
       directionalLight.castShadow=true;
       scene.add(directionalLight);
     }
@@ -67,6 +70,23 @@ export default class AppHero{
       ground.rotation.x=-90*THREE.MathUtils.DEG2RAD;
       scene.add(ground);
     }
+
+    {
+      const loader = new GLTFLoader();
+      loader.loadAsync("./hello-bake-procedural-material.glb").then((gltf)=>{
+        gltf.scene.traverse((object3D)=>{
+          if(object3D instanceof THREE.Mesh){
+            this.threeObjects.suzanne=object3D;
+            object3D.castShadow=true;
+            object3D.receiveShadow=true;
+            scene.add(object3D);
+          }
+        });
+      }).catch((error)=>{
+        console.error(error);
+      })
+    }
+
     
     let cube:THREE.Mesh;
     {
@@ -75,7 +95,7 @@ export default class AppHero{
       cube = new THREE.Mesh( geometry, material );
       cube.castShadow=true;
       cube.receiveShadow=true;
-      cube.position.set(0,1,0);
+      cube.position.set(2,1,0);
       scene.add( cube );
     }
     
@@ -87,6 +107,7 @@ export default class AppHero{
       renderer,
       orbitControls,
       cube,
+      suzanne:undefined,
     }
     window.addEventListener("resize",()=>{
       this.onResize();
