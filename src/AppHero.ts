@@ -1,10 +1,12 @@
 import * as THREE from "three";
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { getElementSize } from "./dom_utils";
 
 interface ThreeObjects{
   scene:THREE.Scene;
   camera:THREE.PerspectiveCamera;
   renderer:THREE.WebGLRenderer;
+  orbitControls:OrbitControls;
   cube:THREE.Mesh;
 }
 
@@ -37,6 +39,10 @@ export default class AppHero{
       this.onTick(time,frame);
     } );
     this.sectionHeroElement.appendChild( renderer.domElement );
+
+    const orbitControls=new OrbitControls(camera,renderer.domElement);
+
+
 
     {
       const ambientLight=new THREE.AmbientLight(0xffffff,0.6);
@@ -79,6 +85,7 @@ export default class AppHero{
       scene,
       camera,
       renderer,
+      orbitControls,
       cube,
     }
     window.addEventListener("resize",()=>{
